@@ -127,7 +127,41 @@ function renderProducts(){
  const arr=PRODUCTS.filter(p=>(activeCat==="Todos"||p.cat===activeCat)&&(`${p.name} ${p.ref} ${p.cat}`.toLowerCase().includes(q)));
  document.getElementById("products").innerHTML=arr.length?arr.map((p,i)=>`<article class="product"><div class="prodimg">${p.cat==="Perfumes"||p.cat==="Iconic Elixirs"?"🌸":p.cat==="Nutrición"?"🥤":"🌿"}</div><h3>${p.name}</h3><div class="meta">Ref. ${p.ref} · ${p.size} · pág. ${p.page}</div><div class="price">${p.price}</div><p style="font-size:13px;color:var(--muted);min-height:56px">${p.desc}</p><div class="actions"><button onclick="ask('Dame información sobre ${p.name} ref. ${p.ref}')">🤖 IA</button><button class="go" onclick="selectProduct(${PRODUCTS.indexOf(p)})">🎬 Crear</button></div></article>`).join(""):`<div class="empty" style="grid-column:1/-1">No encontré productos con ese criterio.</div>`;
 }
-function selectProduct(i){show("content");document.getElementById("cp").value=String(i);generateContent();}
+
+function renderProducts(){
+  renderCats();
+  const q = (document.getElementById("q")?.value || "").toLowerCase();
+  const arr = PRODUCTS.filter(p =>
+    (activeCat === "Todos" || p.cat === activeCat) &&
+    (`${p.name} ${p.ref} ${p.cat}`.toLowerCase().includes(q))
+  );
+
+  document.getElementById("products").innerHTML = arr.length
+    ? arr.map(p => `
+      <article class="product">
+        <div class="prodimg">
+          ${p.cat === "Perfumes" || p.cat === "Iconic Elixirs" ? "🌸" : p.cat === "Nutrición" ? "🥤" : "🌿"}
+        </div>
+        <h3>${p.name}</h3>
+        <div class="meta">Ref. ${p.ref} · ${p.size} · pág. ${p.page}</div>
+        <div class="price">${p.price}</div>
+        <p>${p.desc}</p>
+        <div class="actions">
+          <button onclick="openProductAI(${PRODUCTS.indexOf(p)})">🤖 IA</button>
+          <button class="go" onclick="selectProduct(${PRODUCTS.indexOf(p)})">🎬 Crear</button>
+        </div>
+      </article>
+    `).join("")
+    : '<div class="empty">No encontré productos con ese criterio.</div>';
+}
+
+function openProductAI(i){
+  const p = PRODUCTS[i];
+  if (!p) return;
+  show("ai");
+  ask(`Dame información sobre ${p.name}, referencia ${p.ref}`);
+}
+
 function fillContentProducts(){
  document.getElementById("cp").innerHTML=PRODUCTS.map((p,i)=>`<option value="${i}">${p.name} · ${p.ref}</option>`).join("");
 }
