@@ -1,0 +1,2 @@
+LR CONNECT V8
+Esta versión es una evolución del prototipo. Antes de producción: validar fuentes, autorización de uso, privacidad, backend y pruebas.
