@@ -1,0 +1,6 @@
+LR CONNECT V9 — PREPARACIÓN DE PUBLICACIÓN
+- Unifica la aplicación existente en un paquete.
+- Corrige la ruta comodín de Express 5 para evitar errores de arranque.
+- Añade render.yaml para facilitar despliegue de Node en Render.
+- Añade guía de instalación y publicación en español.
+- No añade todavía autenticación real ni base de datos online; requiere desarrollo antes de producción.
